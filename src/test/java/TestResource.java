@@ -73,7 +73,7 @@ public class TestResource {
 
         when(geoLocationDao.findById(anyLong())).thenReturn(geolocation);
 
-        Geolocation found = resourceExtension.target(baseUrl.concat("/findBy/2")).request().get(Geolocation.class);
+        Geolocation found = resourceExtension.target(baseUrl.concat("/findByIp/2")).request().get(Geolocation.class);
 
         assertThat(found.getId()).isEqualTo(geolocation.getId());
 

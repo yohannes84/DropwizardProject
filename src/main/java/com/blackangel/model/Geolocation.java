@@ -2,8 +2,12 @@ package com.blackangel.model;
 
 import javax.persistence.*;
 
-@Entity
+@Entity(name = "GEOLOCATION")
 @Table(name="Geo_Location")
+@NamedQuery(
+        name="findGeolocationByIp",
+        query="FROM GEOLOCATION g WHERE ip = :ipAddress"
+)
 public class Geolocation {
 
     @Id

@@ -1,0 +1,15 @@
+{
+  "ip":"58.48.23.1",
+  "status": "success",
+  "country":"Canada",
+  "region":"AB",
+  "regionName":"Alberta",
+  "city":"Calgary",
+  "zip":"H1K",
+  "timezone":"America/Toronto",
+  "latitude":45.6085,
+  "longitude":45.6085,
+  "isp":"telus llc",
+  "org": "telus Rodeon Group",
+  "asnumber":"AS5769 Telus telecom"
+}

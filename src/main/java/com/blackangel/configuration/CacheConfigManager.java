@@ -9,6 +9,7 @@ import com.google.common.cache.LoadingCache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
@@ -22,7 +23,7 @@ public class CacheConfigManager {
         return cacheConfigManager;
     }
 
-    private static LoadingCache<String, Geolocation> geolocationCache;
+    private static LoadingCache<String, Optional<Geolocation>> geolocationCache;
 
     public void initStudentCache(GeolocationService geolocationService) {
         if (geolocationCache == null) {
@@ -32,10 +33,10 @@ public class CacheConfigManager {
                             .maximumSize(200) // Maximum of 200 records can be cached
                             .expireAfterAccess(1, TimeUnit.MINUTES) // Cache will expire after 30 minutes
                             .recordStats()
-                            .build(new CacheLoader<String, Geolocation>() { // Build the CacheLoader
+                            .build(new CacheLoader<String, Optional<Geolocation>>() { // Build the CacheLoader
 
                                 @Override
-                                public Geolocation load(String ipAddress) throws Exception {
+                                public Optional<Geolocation> load(String ipAddress) throws Exception {
                                     logger.info("Fetching Geolocation Data from postgresDB/ Cache Miss");
                                     return geolocationService.getGeoLocationDetailByIp(ipAddress);
                                 }
@@ -43,7 +44,7 @@ public class CacheConfigManager {
         }
     }
 
-    public Geolocation getGeoLocationDataFromCache(String ipAddress) {
+    public Optional<Geolocation> getGeoLocationDataFromCache(String ipAddress) {
         try {
             CacheStats cacheStats = geolocationCache.stats();
             logger.info("CacheStats = {} ", cacheStats);
